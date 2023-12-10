@@ -1,0 +1,24 @@
+!require python3 chmod pip3
+!main build
+!def build
+    if [ -d dist ]; then
+        rm -rf dist
+    fi
+    mkdir dist
+    cp src/wheelsmith.py dist/wheelsmith
+    chmod +x dist/wheelsmith
+!def run
+    if [ ! -d dist ]; then
+        !execute build
+    fi
+    python3 dist/wheelsmith
+!def install:admin
+    if [ ! -d dist ]; then
+        !execute build
+    fi
+    cp dist/wheelsmith /usr/bin/wheelsmith
+!def commit
+    set -e
+    git add .
+    git commit -m $1
+    git push
