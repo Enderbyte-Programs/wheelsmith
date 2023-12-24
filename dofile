@@ -5,7 +5,8 @@
         rm -rf dist
     fi
     mkdir dist
-    cp src/wheelsmith.py dist/wheelsmith
+    cp src/*.py dist
+    mv dist/wheelsmith.py dist/wheelsmith
     chmod +x dist/wheelsmith
 !def run
     if [ ! -d dist ]; then
@@ -17,6 +18,8 @@
         !execute build
     fi
     cp dist/wheelsmith /usr/bin/wheelsmith
+    mkdir -p /usr/lib/wheelsmith
+    cp dist/*.py /usr/lib/wheelsmith
 !def commit
     set -e
     git add .
