@@ -13,6 +13,7 @@
         !execute build
     fi
     python3 dist/wheelsmith
+    !execute clean
 !def install:admin
     if [ ! -d dist ]; then
         !execute build
@@ -20,8 +21,11 @@
     cp dist/wheelsmith /usr/bin/wheelsmith
     mkdir -p /usr/lib/wheelsmith
     cp dist/*.py /usr/lib/wheelsmith
+    rm -rf dist
 !def commit
     set -e
     git add .
     git commit -m $1
     git push origin main
+!def clean
+    rm -rf dist

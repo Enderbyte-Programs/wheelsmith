@@ -3,7 +3,7 @@ import cursesplus
 import curses
 import sys
 
-sys.path.insert("/usr/lib/wheelsmith")
+sys.path.insert(0,"/usr/lib/wheelsmith")
 
 import epappdata
 
@@ -21,5 +21,10 @@ def main(stdscr):
     epappdata.register_app_name("wheelsmith")
     APPDATA = epappdata.AppDataFile()
     APPDATA.setdefault(defaultappdata)
+    APPDATA.load()
+    if not APPDATA["setup"]:
+        cursesplus.messagebox.showinfo(stdscr,["Welcome to wheelsmith.","We have some setup to do"],"Welcome")
+        APPDATA["setup"] = True
+    APPDATA.write()
 
 curses.wrapper(main)
